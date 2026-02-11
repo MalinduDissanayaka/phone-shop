@@ -21,17 +21,26 @@
                     <h1 class="text-2xl font-bold mb-6">Phone Shop</h1>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        @foreach($phones as $phone)
-                            <div class="border rounded-lg p-4">
-                                <img 
-                                    src="{{ asset('images/'.$phone->image) }}" 
-                                    class="w-full h-48 object-cover mb-4"
-                                >
-                                <h3 class="font-semibold text-lg">{{ $phone->name }}</h3>
-                                <p class="text-sm text-gray-600">{{ $phone->description }}</p>
-                                <p class="font-bold mt-2">Rs {{ $phone->price }}</p>
-                            </div>
-                        @endforeach
+                       
+                       @foreach($phones as $phone)
+    <div>
+        <img src="{{ asset('images/'.$phone->image) }}" width="150">
+        <h3>{{ $phone->name }}</h3>
+        <p>{{ $phone->description }}</p>
+        <p>Rs {{ $phone->price }}</p>
+
+        @if(auth()->check() && auth()->user()->role === 'admin')
+            <a href="{{ route('admin.phones.edit', $phone->id) }}">Edit</a>
+
+            <form action="{{ route('admin.phones.delete', $phone->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        @endif
+    </div>
+@endforeach
+
                     </div>
 
                 </div>
