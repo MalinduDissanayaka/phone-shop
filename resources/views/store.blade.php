@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
+        
     </x-slot>
 
     <div class="py-12">
@@ -37,6 +38,15 @@
     <h3 class="font-bold mt-2">{{ $phone->name }}</h3>
     <p>{{ $phone->description }}</p>
     <p class="font-semibold">Rs {{ $phone->price }}</p>
+
+    @if(auth()->user()->role === 'user')
+    <form action="{{ route('cart.add', $phone->id) }}" method="POST">
+        @csrf
+        <button class="bg-green-600 text-black px-3 py-1 rounded mt-2">
+            Add to Cart
+        </button>
+    </form>
+@endif
 
     @if(auth()->check() && auth()->user()->role === 'admin')
 

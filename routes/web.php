@@ -70,5 +70,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 | Breeze Auth Routes
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\CartController;
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])
+        ->name('cart.add');
+
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])
+        ->name('cart.remove');
+});
+
 
 require __DIR__.'/auth.php';
