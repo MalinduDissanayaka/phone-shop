@@ -9,7 +9,7 @@
             </div>
 
             {{-- Cart Button (Only User) --}}
-            @if(auth()->check() && auth()->user()->role === 'user')
+            @if(auth()->check() && !auth()->user()->isAdmin())
                 <a href="{{ route('cart') }}"
                    class="relative inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl shadow hover:bg-indigo-500 transition">
 
@@ -39,7 +39,7 @@
                     </p>
                 </div>
 
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->isAdmin())
                     <div class="absolute top-6 right-6">
                         <a href="{{ route('admin.phones.create') }}"
                            class="bg-white text-indigo-600 px-5 py-2.5 rounded-xl font-semibold shadow-lg hover:-translate-y-1 transition">
@@ -109,7 +109,7 @@
                             <div class="p-6 pt-0 flex gap-3">
 
                                 {{-- USER BUTTON --}}
-                                @if(auth()->user()->role === 'user')
+                                @if(!auth()->user()->isAdmin())
                                     <form action="{{ route('cart.add', $phone->id) }}" method="POST" class="flex-1">
                                         @csrf
                                         <button class="w-full bg-indigo-600 text-black py-2.5 rounded-xl font-medium hover:bg-indigo-500 transition shadow">
@@ -119,7 +119,7 @@
                                 @endif
 
                                 {{-- ADMIN BUTTONS --}}
-                                @if(auth()->user()->role === 'admin')
+                                @if(auth()->user()->isAdmin())
                                     <a href="{{ route('admin.phones.edit', $phone->id) }}"
                                        class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
                                         Edit
