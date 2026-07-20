@@ -70,19 +70,27 @@
 
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
-            <x-input-label for="price" value="Price (Rs)" />
-            <x-text-input id="price" name="price" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('price', $product->price ?? '')" required />
-            <x-input-error class="mt-2" :messages="$errors->get('price')" />
+            <x-input-label for="cost_price" value="Cost Price (Rs)" />
+            <x-text-input id="cost_price" name="cost_price" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('cost_price', $product->cost_price ?? '')" required />
+            <p class="mt-1 text-xs text-gray-400">What you pay to acquire this product. Not shown to customers.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('cost_price')" />
         </div>
 
         <div>
-            <x-input-label for="image" :value="$product ? 'Replace Image (optional)' : 'Product Image'" />
-            <input id="image" name="image" type="file" accept="image/*" {{ $product ? '' : 'required' }}
-                class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-gray-800 file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:text-white hover:file:bg-gray-700">
-            @if ($product)
-                <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="mt-2 h-16 w-16 rounded-lg object-contain bg-gray-50 border border-gray-100 p-1">
-            @endif
-            <x-input-error class="mt-2" :messages="$errors->get('image')" />
+            <x-input-label for="price" value="Sell Price (Rs)" />
+            <x-text-input id="price" name="price" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('price', $product->price ?? '')" required />
+            <p class="mt-1 text-xs text-gray-400">The price customers pay in the store.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('price')" />
         </div>
+    </div>
+
+    <div>
+        <x-input-label for="image" :value="$product ? 'Replace Image (optional)' : 'Product Image'" />
+        <input id="image" name="image" type="file" accept="image/*" {{ $product ? '' : 'required' }}
+            class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-gray-800 file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:text-white hover:file:bg-gray-700">
+        @if ($product)
+            <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="mt-2 h-16 w-16 rounded-lg object-contain bg-gray-50 border border-gray-100 p-1">
+        @endif
+        <x-input-error class="mt-2" :messages="$errors->get('image')" />
     </div>
 </div>

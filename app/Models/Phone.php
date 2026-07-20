@@ -14,6 +14,7 @@ class Phone extends Model
         'name',
         'description',
         'price',
+        'cost_price',
         'image',
         'category_id',
     ];

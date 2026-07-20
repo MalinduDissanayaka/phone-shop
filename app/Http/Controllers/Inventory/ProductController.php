@@ -29,6 +29,7 @@ class ProductController extends Controller
         Phone::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
+            'cost_price' => $validated['cost_price'],
             'price' => $validated['price'],
             'image' => $imageName,
             'category_id' => $categoryId,
@@ -51,6 +52,7 @@ class ProductController extends Controller
 
         $product->name = $validated['name'];
         $product->description = $validated['description'];
+        $product->cost_price = $validated['cost_price'];
         $product->price = $validated['price'];
         $product->category_id = $categoryId;
 
@@ -78,6 +80,7 @@ class ProductController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'cost_price' => ['required', 'numeric', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
             'image' => [$forUpdate ? 'nullable' : 'required', 'image', 'max:4096'],
             'main_category_id' => ['nullable', 'exists:categories,id'],
