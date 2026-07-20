@@ -1,6 +1,6 @@
-# 📱 Phone Shop Application (Laravel)
+# 📱 Phone Shop POS Application (Laravel)
 
-A simple **Phone Shop web application** built with **Laravel 12**, designed for beginners to understand Laravel fundamentals such as routing, authentication, middleware, MVC, and MySQL integration.
+A **Point-of-Sale (POS) management system** for a phone retail business, built with **Laravel 12**. The application provides the core back-office foundation for a multi-branch shop — authentication, role-based access control, inventory, and invoice configuration — with the POS sales terminal and related modules planned for the next development phase.
 
 ---
 
@@ -12,17 +12,23 @@ A simple **Phone Shop web application** built with **Laravel 12**, designed for 
 - Logout
 - Email verification (Laravel Breeze)
 
-### 🛍 Phone Shop (User)
-- View phone list
-- View phone details (image, description, price)
-- Accessible only after login
+### 🔐 Role-Based Access Control (RBAC)
+- Custom roles with per-page permissions (`page.access` middleware)
+- Role management (create, edit, assign)
+- User management under Settings
 
-### 🔐 Admin Panel
+### 🏬 Branch Management
+- Manage multiple shop branches from Settings
+
+### 📦 Inventory Management
+- Category management (CRUD)
+- Product management (CRUD) with cost price and selling price tracking
 - Admin-only access using middleware
-- Add new phones
-- Edit phone details
-- Delete phones
-- Admin actions hidden from normal users
+
+### 🧾 Invoice Settings
+- Configurable invoice prefix and sequential numbering
+- Tax rate and currency configuration
+- Custom invoice footer note
 
 ---
 
@@ -37,27 +43,55 @@ A simple **Phone Shop web application** built with **Laravel 12**, designed for 
 
 ---
 
+## 🗺 Roadmap (Planned / Coming Soon)
+
+These modules are scaffolded in the routes but not yet implemented:
+
+- 🧮 **POS Terminal** — main point-of-sale checkout/billing screen (`/pos`)
+- 📊 **Product Stock** — stock level tracking
+- 🙋 **Customer Management** — customer creation & list
+- 📈 **Sales Reports**
+- 💸 **Expenses**
+- 🔔 **Notifications**
+
+---
+
 ## 📂 Project Structure (Important Folders)
 
 ```
 app/
  ├── Http/
  │   ├── Controllers/
- │   │   └── PhoneController.php
+ │   │   ├── PhoneController.php
+ │   │   ├── Inventory/
+ │   │   │   ├── CategoryController.php
+ │   │   │   └── ProductController.php
+ │   │   └── Settings/
+ │   │       ├── RoleController.php
+ │   │       ├── UserController.php
+ │   │       ├── BranchController.php
+ │   │       └── InvoiceSettingController.php
  │   └── Middleware/
  │       └── AdminMiddleware.php
 resources/
  ├── views/
  │   ├── dashboard.blade.php
  │   ├── welcome.blade.php
+ │   ├── inventory/
+ │   ├── settings/
  │   └── admin/
  │       └── phones/
 routes/
  └── web.php
 database/
  ├── migrations/
- │   └── create_phones_table.php
- │   └── add_role_to_users_table.php
+ │   ├── create_phones_table.php
+ │   ├── add_role_to_users_table.php
+ │   ├── create_branches_table.php
+ │   ├── create_roles_table.php
+ │   ├── create_invoice_settings_table.php
+ │   ├── create_categories_table.php
+ │   └── add_cost_price_to_phones_table.php
 ```
 
 ---
@@ -155,24 +189,12 @@ After login, users are redirected to:
 /dashboard
 ```
 
-Which shows the **Phone Shop page**.
-
 ---
 
-## 🧪 Dummy Data (Phones)
+## 📌 Notes
 
-```sql
-INSERT INTO phones (name, description, price, image, created_at, updated_at) VALUES
-('iPhone 14', 'Apple iPhone with A15 chip', 289000, 'iphone14.jpg', NOW(), NOW()),
-('Samsung Galaxy S23', 'AMOLED flagship phone', 245000, 'galaxy_s23.jpg', NOW(), NOW());
-```
-
----
-
-## 📌 Notes for Beginners
-
-- Blade controls UI visibility (`@if(auth()->user()->role === 'admin')`)
-- Middleware controls access security
+- Blade controls UI visibility based on role/permissions
+- Middleware controls access security (`admin`, `page.access:<key>`)
 - MVC pattern is strictly followed
 - Laravel 12 uses `bootstrap/app.php` instead of `Kernel.php`
 
@@ -180,9 +202,9 @@ INSERT INTO phones (name, description, price, image, created_at, updated_at) VAL
 
 ## 👨‍💻 Author
 
-**Malindu Dissanayaka**  
-Undergraduate Software Engineering Student  
-Sri Lanka 🇱🇰  
+**Malindu Dissanayaka**
+Undergraduate Software Engineering Student
+Sri Lanka 🇱🇰
 
 ---
 
