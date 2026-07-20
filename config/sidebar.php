@@ -18,8 +18,8 @@ return [
         'label' => 'Inventory',
         'icon' => 'cube',
         'items' => [
-            'inventory.category' => ['label' => 'Product Category', 'route' => 'inventory.category'],
-            'inventory.add_product' => ['label' => 'Add Product', 'route' => 'inventory.add_product'],
+            'inventory.category' => ['label' => 'Product Category', 'route' => 'inventory.categories.index'],
+            'inventory.add_product' => ['label' => 'Add Product', 'route' => 'inventory.products.create'],
             'inventory.stock' => ['label' => 'Product Stock', 'route' => 'inventory.stock'],
         ],
     ],

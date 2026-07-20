@@ -8,6 +8,8 @@ use App\Http\Controllers\Settings\InvoiceSettingController;
 use App\Http\Controllers\Settings\BranchController;
 use App\Http\Controllers\Settings\RoleController;
 use App\Http\Controllers\Settings\UserController;
+use App\Http\Controllers\Inventory\CategoryController;
+use App\Http\Controllers\Inventory\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,27 @@ Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(functi
 
 /*
 |--------------------------------------------------------------------------
+| Inventory Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth'])->prefix('inventory')->name('inventory.')->group(function () {
+
+    Route::middleware('page.access:inventory.category')->group(function () {
+        Route::resource('categories', CategoryController::class)->except(['show']);
+    });
+
+    Route::middleware('page.access:inventory.add_product')->group(function () {
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
 | Coming Soon Placeholder Routes (built out in later phases)
 |--------------------------------------------------------------------------
 */
@@ -82,8 +105,6 @@ Route::middleware(['auth'])->prefix('settings')->name('settings.')->group(functi
 Route::middleware(['auth'])->group(function () {
     Route::view('/pos', 'coming-soon', ['title' => 'POS Terminal'])->name('pos.terminal');
 
-    Route::view('/inventory/category', 'coming-soon', ['title' => 'Product Category'])->name('inventory.category');
-    Route::view('/inventory/add-product', 'coming-soon', ['title' => 'Add Product'])->name('inventory.add_product');
     Route::view('/inventory/stock', 'coming-soon', ['title' => 'Product Stock'])->name('inventory.stock');
 
     Route::view('/customers/create', 'coming-soon', ['title' => 'Customer Creation'])->name('customer.create');

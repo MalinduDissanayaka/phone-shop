@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Phone extends Model
 {
@@ -13,6 +14,12 @@ class Phone extends Model
         'name',
         'description',
         'price',
-        'image'
+        'image',
+        'category_id',
     ];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
