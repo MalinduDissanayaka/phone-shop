@@ -17,10 +17,9 @@ use App\Http\Controllers\Inventory\ProductController;
 |--------------------------------------------------------------------------
 */
 
-// Welcome page (first page)
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return redirect()->route('login');
+});
 
 /*
 |--------------------------------------------------------------------------
