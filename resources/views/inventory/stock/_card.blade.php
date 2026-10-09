@@ -3,12 +3,7 @@
     $status = $product->stockStatus();
 
     // Full class names kept literal so Tailwind's scanner picks them up.
-    $tones = [
-        'success' => ['badge' => 'bg-success/10 text-success ring-success/20', 'bar' => 'bg-success'],
-        'warning' => ['badge' => 'bg-warning/10 text-warning ring-warning/20', 'bar' => 'bg-warning'],
-        'danger' => ['badge' => 'bg-danger/10 text-danger ring-danger/20', 'bar' => 'bg-danger'],
-    ];
-    $tone = $tones[$status->tone()];
+    $barClass = ['success' => 'bg-success', 'warning' => 'bg-warning', 'danger' => 'bg-danger'][$status->tone()];
 
     // The bar spans 0 → 2× reorder level, so the reorder marker sits at the midpoint.
     $barMax = max($product->reorder_level * 2, 1);
@@ -26,10 +21,7 @@
         <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy"
             class="h-full w-full object-contain transition duration-300 group-hover:scale-105">
 
-        <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset backdrop-blur {{ $tone['badge'] }}">
-            <span class="h-1.5 w-1.5 rounded-full {{ $tone['bar'] }}"></span>
-            {{ $status->label() }}
-        </span>
+        <x-stock-badge :product="$product" class="absolute left-3 top-3 backdrop-blur" />
     </div>
 
     <div class="flex flex-1 flex-col p-5">
@@ -45,7 +37,7 @@
         </div>
 
         <div class="relative mt-3 h-1.5 overflow-hidden rounded-full bg-line" role="presentation">
-            <div class="h-full rounded-full {{ $tone['bar'] }}" style="width: {{ $fill }}%"></div>
+            <div class="h-full rounded-full {{ $barClass }}" style="width: {{ $fill }}%"></div>
             <div class="absolute inset-y-0 left-1/2 w-px bg-fg-subtle/60" title="Reorder level"></div>
         </div>
 

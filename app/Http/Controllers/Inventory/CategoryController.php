@@ -11,7 +11,12 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('children')->whereNull('parent_id')->orderBy('name')->get();
+        $categories = Category::query()
+            ->whereNull('parent_id')
+            ->withCount('products')
+            ->with(['children' => fn ($q) => $q->withCount('products')->orderBy('name')])
+            ->orderBy('name')
+            ->get();
 
         return view('inventory.categories.index', compact('categories'));
     }

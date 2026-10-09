@@ -51,6 +51,11 @@
         --c-danger: 248 113 113;        /* red-400 */
     }
 
+    /* Hide Alpine-controlled content until Alpine has initialised. */
+    [x-cloak] {
+        display: none !important;
+    }
+
     /* Prevent every `transition` from animating while the theme flips. */
     .theme-switching,
     .theme-switching * {
