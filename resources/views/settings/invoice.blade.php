@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight text-fg">
             Invoice Setting
         </h2>
     </x-slot>
 
     <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="rounded-xl bg-white p-6 shadow-sm">
+        <div class="card p-6">
             @if (session('status'))
-                <div class="mb-6 rounded-lg bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+                <div class="mb-6 alert-success">
                     {{ session('status') }}
                 </div>
             @endif
@@ -46,7 +46,7 @@
                 <div>
                     <x-input-label for="footer_note" value="Invoice Footer Note" />
                     <textarea id="footer_note" name="footer_note" rows="3"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('footer_note', $invoiceSetting->footer_note) }}</textarea>
+                        class="mt-1 block w-full field">{{ old('footer_note', $invoiceSetting->footer_note) }}</textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('footer_note')" />
                 </div>
 

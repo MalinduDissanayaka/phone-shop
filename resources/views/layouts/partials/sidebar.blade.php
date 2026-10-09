@@ -12,15 +12,15 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
     @click="mobileOpen = false"
-    class="fixed inset-0 z-30 bg-gray-900/50 lg:hidden"
+    class="fixed inset-0 z-30 bg-slate-950/60 backdrop-blur-sm lg:hidden"
     style="display: none;"
 ></div>
 
 <aside
     :class="mobileOpen ? 'translate-x-0' : '-translate-x-full'"
-    class="fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 transform flex-col bg-gray-900 text-gray-300 transition-transform duration-200 ease-in-out lg:static lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 transform flex-col border-r border-white/5 bg-gradient-to-b from-slate-900 via-slate-900 to-indigo-950 text-slate-300 transition-transform duration-200 ease-in-out lg:static lg:translate-x-0"
 >
-    <div class="flex h-16 shrink-0 items-center gap-2 border-b border-gray-800 px-5">
+    <div class="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-5">
         <x-application-logo class="h-8 w-auto fill-current text-white" />
         <span class="truncate text-lg font-semibold text-white">Phone Shop POS</span>
     </div>
@@ -41,7 +41,7 @@
                     <button
                         @click="open = !open"
                         type="button"
-                        class="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-gray-800 hover:text-white {{ $groupActive ? 'text-white' : 'text-gray-400' }}"
+                        class="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/5 hover:text-white {{ $groupActive ? 'text-white' : 'text-slate-400' }}"
                     >
                         <span class="flex items-center gap-3">
                             <x-icon :name="$group['icon']" class="h-5 w-5" />
@@ -50,11 +50,11 @@
                         <x-icon name="chevron-down" class="h-4 w-4 transition-transform" x-bind:class="{ 'rotate-180': open }" />
                     </button>
 
-                    <div x-show="open" class="ml-4 mt-1 space-y-1 border-l border-gray-800 pl-4">
+                    <div x-show="open" class="ml-4 mt-1 space-y-1 border-l border-white/10 pl-4">
                         @foreach ($visibleItems as $key => $item)
                             <a
                                 href="{{ route($item['route']) }}"
-                                class="block rounded-lg px-3 py-2 text-sm transition {{ request()->routeIs($item['route']) ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}"
+                                class="block rounded-lg px-3 py-2 text-sm transition {{ request()->routeIs($item['route']) ? 'bg-gradient-to-r from-primary to-accent font-medium text-white shadow-md shadow-primary/20' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}"
                             >
                                 {{ $item['label'] }}
                             </a>
@@ -65,8 +65,8 @@
         @endforeach
     </nav>
 
-    <div class="border-t border-gray-800 p-4">
-        <div class="text-xs text-gray-500">Logged in as</div>
+    <div class="border-t border-white/10 p-4">
+        <div class="text-xs text-slate-500">Logged in as</div>
         <div class="truncate text-sm font-medium text-white">{{ $navUser->name }}</div>
     </div>
 </aside>

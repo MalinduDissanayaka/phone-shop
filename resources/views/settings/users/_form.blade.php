@@ -21,7 +21,7 @@
 <div>
     <x-input-label for="role_id" value="Role" />
     <select id="role_id" name="role_id" required
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        class="mt-1 block w-full field">
         <option value="">Select a role</option>
         @foreach ($roles as $role)
             <option value="{{ $role->id }}" @selected(old('role_id', $user->role_id ?? '') == $role->id)>
@@ -35,7 +35,7 @@
 <div>
     <x-input-label for="branch_id" value="Branch" />
     <select id="branch_id" name="branch_id"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        class="mt-1 block w-full field">
         <option value="">No branch</option>
         @foreach ($branches as $branch)
             <option value="{{ $branch->id }}" @selected(old('branch_id', $user->branch_id ?? '') == $branch->id)>

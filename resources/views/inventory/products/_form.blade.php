@@ -33,7 +33,7 @@
         <div>
             <x-input-label for="main_category_id" value="Main Category" />
             <select id="main_category_id" name="main_category_id" x-model="mainCategoryId" @change="subCategoryId = ''"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="mt-1 block w-full field">
                 <option value="">Select a main category</option>
                 @foreach ($mainCategories as $main)
                     <option value="{{ $main->id }}">{{ $main->name }}</option>
@@ -45,7 +45,7 @@
         <div x-show="subCategories.length > 0">
             <x-input-label for="category_id" value="Sub Category" />
             <select id="category_id" name="category_id" x-model="subCategoryId"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                class="mt-1 block w-full field">
                 <option value="">Select a subcategory</option>
                 <template x-for="sub in subCategories" :key="sub.id">
                     <option :value="sub.id" :selected="sub.id == subCategoryId" x-text="sub.name"></option>
@@ -64,7 +64,7 @@
     <div>
         <x-input-label for="description" value="Description" />
         <textarea id="description" name="description" rows="3" required
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('description', $product->description ?? '') }}</textarea>
+            class="mt-1 block w-full field">{{ old('description', $product->description ?? '') }}</textarea>
         <x-input-error class="mt-2" :messages="$errors->get('description')" />
     </div>
 
@@ -72,14 +72,14 @@
         <div>
             <x-input-label for="cost_price" value="Cost Price (Rs)" />
             <x-text-input id="cost_price" name="cost_price" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('cost_price', $product->cost_price ?? '')" required />
-            <p class="mt-1 text-xs text-gray-400">What you pay to acquire this product. Not shown to customers.</p>
+            <p class="mt-1 text-xs text-fg-subtle">What you pay to acquire this product. Not shown to customers.</p>
             <x-input-error class="mt-2" :messages="$errors->get('cost_price')" />
         </div>
 
         <div>
             <x-input-label for="price" value="Sell Price (Rs)" />
             <x-text-input id="price" name="price" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('price', $product->price ?? '')" required />
-            <p class="mt-1 text-xs text-gray-400">The price customers pay in the store.</p>
+            <p class="mt-1 text-xs text-fg-subtle">The price customers pay in the store.</p>
             <x-input-error class="mt-2" :messages="$errors->get('price')" />
         </div>
     </div>
@@ -87,9 +87,9 @@
     <div>
         <x-input-label for="image" :value="$product ? 'Replace Image (optional)' : 'Product Image'" />
         <input id="image" name="image" type="file" accept="image/*" {{ $product ? '' : 'required' }}
-            class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-gray-800 file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:text-white hover:file:bg-gray-700">
+            class="mt-1 block w-full text-sm text-fg-muted file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:text-white hover:file:bg-primary/90">
         @if ($product)
-            <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="mt-2 h-16 w-16 rounded-lg object-contain bg-gray-50 border border-gray-100 p-1">
+            <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="mt-2 h-16 w-16 rounded-lg object-contain bg-surface-muted border border-line p-1">
         @endif
         <x-input-error class="mt-2" :messages="$errors->get('image')" />
     </div>

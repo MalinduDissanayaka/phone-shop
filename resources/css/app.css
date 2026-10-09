@@ -1,3 +1,94 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Theme tokens (space-separated RGB so Tailwind opacity modifiers work).
+ * Brand palette is taken from the login screen: slate base, blue → indigo accent.
+ */
+@layer base {
+    :root {
+        color-scheme: light;
+
+        --c-canvas: 241 245 249;        /* slate-100 */
+        --c-surface: 255 255 255;
+        --c-surface-muted: 248 250 252; /* slate-50 */
+        --c-field: 255 255 255;
+        --c-line: 226 232 240;          /* slate-200 */
+        --c-line-strong: 203 213 225;   /* slate-300 */
+
+        --c-fg: 15 23 42;               /* slate-900 */
+        --c-fg-soft: 51 65 85;          /* slate-700 */
+        --c-fg-muted: 71 85 105;        /* slate-600 */
+        --c-fg-subtle: 100 116 139;     /* slate-500 */
+
+        --c-primary: 37 99 235;         /* blue-600 */
+        --c-accent: 79 70 229;          /* indigo-600 */
+        --c-link: 37 99 235;            /* blue-600 */
+        --c-success: 21 128 61;         /* green-700 */
+        --c-danger: 220 38 38;          /* red-600 */
+    }
+
+    .dark {
+        color-scheme: dark;
+
+        --c-canvas: 2 6 23;             /* slate-950 */
+        --c-surface: 15 23 42;          /* slate-900 */
+        --c-surface-muted: 22 32 51;
+        --c-field: 2 6 23;              /* slate-950 */
+        --c-line: 30 41 59;             /* slate-800 */
+        --c-line-strong: 51 65 85;      /* slate-700 */
+
+        --c-fg: 241 245 249;            /* slate-100 */
+        --c-fg-soft: 226 232 240;       /* slate-200 */
+        --c-fg-muted: 148 163 184;      /* slate-400 */
+        --c-fg-subtle: 100 116 139;     /* slate-500 */
+
+        --c-link: 96 165 250;           /* blue-400 */
+        --c-success: 74 222 128;        /* green-400 */
+        --c-danger: 248 113 113;        /* red-400 */
+    }
+
+    /* Prevent every `transition` from animating while the theme flips. */
+    .theme-switching,
+    .theme-switching * {
+        transition: none !important;
+    }
+}
+
+@layer components {
+    /* Page background; in dark mode echoes the login gradient with soft glows. */
+    .bg-app {
+        @apply bg-canvas;
+    }
+
+    .dark .bg-app {
+        background-image:
+            radial-gradient(60rem 40rem at 100% 0%, rgb(var(--c-accent) / 0.14), transparent 60%),
+            radial-gradient(50rem 30rem at 0% 100%, rgb(var(--c-primary) / 0.10), transparent 60%);
+    }
+
+    .card {
+        @apply rounded-xl border border-line bg-surface shadow-sm;
+    }
+
+    .field {
+        @apply rounded-xl border-line-strong bg-field/60 text-fg shadow-sm placeholder:text-fg-subtle transition-colors duration-200 focus:border-primary focus:ring-primary;
+    }
+
+    .checkbox {
+        @apply rounded border-line-strong bg-field/60 text-primary shadow-sm focus:ring-primary focus:ring-offset-surface;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-accent font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface;
+    }
+
+    .alert-success {
+        @apply rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success ring-1 ring-inset ring-success/20;
+    }
+
+    .table-head {
+        @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-fg-subtle;
+    }
+}

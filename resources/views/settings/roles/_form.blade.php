@@ -11,7 +11,7 @@
 
 <div>
     <x-input-label value="Page Access" />
-    <p class="mt-1 text-sm text-gray-500">Choose which sidebar pages this role can access. Dashboard is always available.</p>
+    <p class="mt-1 text-sm text-fg-muted">Choose which sidebar pages this role can access. Dashboard is always available.</p>
 
     <div class="mt-3 space-y-5">
         @foreach (config('sidebar') as $group)
@@ -20,16 +20,16 @@
             @endphp
 
             @if ($groupItems->isNotEmpty())
-                <div class="rounded-lg border border-gray-200 p-4">
-                    <div class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <div class="rounded-lg border border-line p-4">
+                    <div class="mb-2 flex items-center gap-2 text-sm font-semibold text-fg-soft">
                         <x-icon :name="$group['icon']" class="h-4 w-4" />
                         {{ $group['label'] }}
                     </div>
                     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         @foreach ($groupItems as $key => $item)
-                            <label class="flex items-center gap-2 text-sm text-gray-600">
+                            <label class="flex items-center gap-2 text-sm text-fg-muted">
                                 <input type="checkbox" name="permissions[]" value="{{ $key }}"
-                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                    class="checkbox"
                                     @checked(in_array($key, $selected))>
                                 {{ $item['label'] }}
                             </label>
