@@ -20,16 +20,16 @@
             @endphp
 
             @if ($groupItems->isNotEmpty())
-                <div class="rounded-lg border border-line p-4">
-                    <div class="mb-2 flex items-center gap-2 text-sm font-semibold text-fg-soft">
-                        <x-icon :name="$group['icon']" class="h-4 w-4" />
+                <div class="rounded-xl border border-line p-5">
+                    <div class="mb-3 flex items-center gap-2 text-base font-semibold text-fg-soft">
+                        <x-icon :name="$group['icon']" class="h-5 w-5" />
                         {{ $group['label'] }}
                     </div>
-                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         @foreach ($groupItems as $key => $item)
-                            <label class="flex items-center gap-2 text-sm text-fg-muted">
+                            <label class="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-base text-fg-muted transition hover:bg-surface-muted hover:text-fg">
                                 <input type="checkbox" name="permissions[]" value="{{ $key }}"
-                                    class="checkbox"
+                                    class="checkbox h-5 w-5"
                                     @checked(in_array($key, $selected))>
                                 {{ $item['label'] }}
                             </label>

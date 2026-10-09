@@ -6,15 +6,15 @@
 
     </x-slot>
 
-    <div class="p-6 max-w-6xl mx-auto">
+    <div class="page-narrow">
 
         @if($cartItems->count() > 0)
 
             @foreach($cartItems as $item)
-                <div class="card p-4 mb-4 flex justify-between items-center">
+                <div class="card flex items-center justify-between gap-4 p-6">
 
                     <div>
-                        <h3 class="font-bold text-fg">{{ $item->phone->name }}</h3>
+                        <h3 class="text-lg font-bold text-fg">{{ $item->phone->name }}</h3>
                         <p class="text-fg-muted">Rs {{ $item->phone->price }}</p>
                         <p class="text-fg-muted">Quantity: {{ $item->quantity }}</p>
                     </div>
@@ -24,7 +24,7 @@
                         @csrf
                         @method('DELETE')
 
-                        <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500">
+                        <button class="btn-icon w-auto px-4 text-sm font-semibold text-danger hover:bg-danger/10">
                             Remove
                         </button>
                     </form>
@@ -33,7 +33,7 @@
             @endforeach
 
         @else
-            <p class="text-fg-muted">Your cart is empty.</p>
+            <div class="rounded-2xl border border-dashed border-line-strong bg-surface px-6 py-20 text-center text-base text-fg-muted">Your cart is empty.</div>
         @endif
 
     </div>

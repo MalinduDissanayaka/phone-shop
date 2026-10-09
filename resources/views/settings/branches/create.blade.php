@@ -5,16 +5,13 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="card p-6">
+    <div class="page-narrow">
+        <div class="card p-6 sm:p-8">
             <form method="POST" action="{{ route('settings.branches.store') }}" class="space-y-6">
                 @csrf
                 @include('settings.branches._form')
 
-                <div class="flex items-center gap-4">
-                    <x-primary-button>Save Branch</x-primary-button>
-                    <a href="{{ route('settings.branches.index') }}" class="text-sm text-fg-muted hover:text-fg">Cancel</a>
-                </div>
+                <x-form-actions :cancel="route('settings.branches.index')">Save Branch</x-form-actions>
             </form>
         </div>
     </div>

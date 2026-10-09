@@ -24,7 +24,7 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8"
+    <div class="page"
         x-data="viewMode('inventory.products')">
         <div x-data="{ products: @js($productData), viewingProduct: null, show(id) { this.viewingProduct = this.products[id]; this.$dispatch('open-modal', 'view-product'); } }"
             class="space-y-6">
@@ -34,20 +34,15 @@
                 </div>
             @endif
 
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                <div>
-                    <h3 class="text-lg font-semibold text-fg">Products</h3>
-                    <p class="text-sm text-fg-muted">{{ $products->count() }} {{ Str::plural('product', $products->count()) }} in inventory</p>
-                </div>
+            <x-page-toolbar title="Products">
+                <x-slot:subtitle>{{ $products->count() }} {{ Str::plural('product', $products->count()) }} in inventory</x-slot:subtitle>
 
-                <div class="flex items-center gap-3">
-                    <x-view-toggle />
-                    <button type="button" x-on:click="$dispatch('open-modal', 'add-product')" class="btn-primary px-5 py-2.5 text-sm">
-                        <x-icon name="plus" class="h-5 w-5" />
-                        Add Product
-                    </button>
-                </div>
-            </div>
+                <x-view-toggle />
+                <button type="button" x-on:click="$dispatch('open-modal', 'add-product')" class="btn-primary px-5 py-2.5 text-sm">
+                    <x-icon name="plus" class="h-5 w-5" />
+                    Add Product
+                </button>
+            </x-page-toolbar>
 
             @if ($products->isEmpty())
                 <div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-20 text-center">

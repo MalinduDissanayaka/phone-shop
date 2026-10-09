@@ -9,27 +9,22 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8" x-data="viewMode('inventory.categories')">
+    <div class="page" x-data="viewMode('inventory.categories')">
         @if (session('status'))
             <div class="alert-success">
                 {{ session('status') }}
             </div>
         @endif
 
-        <div class="flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h3 class="text-lg font-semibold text-fg">Categories</h3>
-                <p class="text-sm text-fg-muted">{{ $categories->count() }} main · {{ $subcategoryCount }} subcategories</p>
-            </div>
+        <x-page-toolbar title="Categories">
+            <x-slot:subtitle>{{ $categories->count() }} main · {{ $subcategoryCount }} subcategories</x-slot:subtitle>
 
-            <div class="flex items-center gap-3">
-                <x-view-toggle />
-                <a href="{{ route('inventory.categories.create') }}" class="btn-primary px-5 py-2.5 text-sm">
-                    <x-icon name="plus" class="h-5 w-5" />
-                    Add Category
-                </a>
-            </div>
-        </div>
+            <x-view-toggle />
+            <a href="{{ route('inventory.categories.create') }}" class="btn-primary px-5 py-2.5 text-sm">
+                <x-icon name="plus" class="h-5 w-5" />
+                Add Category
+            </a>
+        </x-page-toolbar>
 
         @if ($categories->isEmpty())
             <div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-20 text-center">

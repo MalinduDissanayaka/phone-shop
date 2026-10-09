@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="card p-6">
+    <div class="page-narrow">
+        <div class="card p-6 sm:p-8">
             @if (session('status'))
                 <div class="mb-6 alert-success">
                     {{ session('status') }}
@@ -46,11 +46,13 @@
                 <div>
                     <x-input-label for="footer_note" value="Invoice Footer Note" />
                     <textarea id="footer_note" name="footer_note" rows="3"
-                        class="mt-1 block w-full field">{{ old('footer_note', $invoiceSetting->footer_note) }}</textarea>
+                        class="field mt-1 block w-full">{{ old('footer_note', $invoiceSetting->footer_note) }}</textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('footer_note')" />
                 </div>
 
-                <x-primary-button>Save Changes</x-primary-button>
+                <div class="flex justify-end border-t border-line pt-6">
+                    <x-primary-button>Save Changes</x-primary-button>
+                </div>
             </form>
         </div>
     </div>
