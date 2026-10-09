@@ -42,6 +42,7 @@ export default {
                 accent: token('accent'),
                 link: token('link'),
                 success: token('success'),
+                warning: token('warning'),
                 danger: token('danger'),
             },
         },

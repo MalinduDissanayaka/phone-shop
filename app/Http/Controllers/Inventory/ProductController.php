@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Inventory;
 
 use App\Http\Controllers\Controller;
+use App\Enums\StockMovementType;
 use App\Models\Category;
 use App\Models\Phone;
+use App\Services\StockService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -17,7 +20,7 @@ class ProductController extends Controller
         return view('inventory.products.create', compact('mainCategories', 'products'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, StockService $stock)
     {
         $validated = $this->validated($request);
         $categoryId = $this->resolveCategoryId($validated);
@@ -26,14 +29,21 @@ class ProductController extends Controller
         $imageName = time() . '.' . $image->extension();
         $image->move(public_path('images'), $imageName);
 
-        Phone::create([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'cost_price' => $validated['cost_price'],
-            'price' => $validated['price'],
-            'image' => $imageName,
-            'category_id' => $categoryId,
-        ]);
+        DB::transaction(function () use ($validated, $imageName, $categoryId, $stock, $request) {
+            $product = Phone::create([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'cost_price' => $validated['cost_price'],
+                'price' => $validated['price'],
+                'reorder_level' => $validated['reorder_level'],
+                'image' => $imageName,
+                'category_id' => $categoryId,
+            ]);
+
+            if (($validated['opening_stock'] ?? 0) > 0) {
+                $stock->adjust($product, StockMovementType::Opening, (int) $validated['opening_stock'], $request->user());
+            }
+        });
 
         return redirect()->route('inventory.products.create')->with('status', 'Product added.');
     }
@@ -54,6 +64,7 @@ class ProductController extends Controller
         $product->description = $validated['description'];
         $product->cost_price = $validated['cost_price'];
         $product->price = $validated['price'];
+        $product->reorder_level = $validated['reorder_level'];
         $product->category_id = $categoryId;
 
         if ($request->hasFile('image')) {
@@ -82,6 +93,8 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'cost_price' => ['required', 'numeric', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
+            'reorder_level' => ['required', 'integer', 'min:0', 'max:1000000'],
+            'opening_stock' => [$forUpdate ? 'prohibited' : 'nullable', 'integer', 'min:0', 'max:1000000'],
             'image' => [$forUpdate ? 'nullable' : 'required', 'image', 'max:4096'],
             'main_category_id' => ['nullable', 'exists:categories,id'],
             'category_id' => ['nullable', 'exists:categories,id'],

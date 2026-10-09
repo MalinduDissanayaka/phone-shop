@@ -31,6 +31,7 @@
                         <th class="table-head">Category</th>
                         <th class="table-head">Cost Price</th>
                         <th class="table-head">Sell Price</th>
+                        <th class="table-head">Stock</th>
                         <th class="table-head text-right">Actions</th>
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
                                 {{ $product->cost_price !== null ? 'Rs ' . number_format($product->cost_price) : '—' }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-3 text-sm text-fg-muted">Rs {{ number_format($product->price) }}</td>
+                            <td class="whitespace-nowrap px-6 py-3 text-sm font-semibold tabular-nums {{ ['success' => 'text-success', 'warning' => 'text-warning', 'danger' => 'text-danger'][$product->stockStatus()->tone()] }}" title="{{ $product->stockStatus()->label() }}">{{ number_format($product->stock_quantity) }}</td>
                             <td class="whitespace-nowrap px-6 py-3 text-right text-sm">
                                 <button type="button"
                                     x-on:click="viewingProduct = @js([
@@ -77,7 +79,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-8 text-center text-sm text-fg-muted">No products yet.</td>
+                            <td colspan="6" class="px-6 py-8 text-center text-sm text-fg-muted">No products yet.</td>
                         </tr>
                     @endforelse
                 </tbody>

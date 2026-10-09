@@ -84,6 +84,24 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        @unless ($product)
+            <div>
+                <x-input-label for="opening_stock" value="Opening Stock" />
+                <x-text-input id="opening_stock" name="opening_stock" type="number" step="1" min="0" class="mt-1 block w-full" :value="old('opening_stock', 0)" />
+                <p class="mt-1 text-xs text-fg-subtle">Units on hand right now. Later changes are made from Product Stock.</p>
+                <x-input-error class="mt-2" :messages="$errors->get('opening_stock')" />
+            </div>
+        @endunless
+
+        <div>
+            <x-input-label for="reorder_level" value="Reorder Level" />
+            <x-text-input id="reorder_level" name="reorder_level" type="number" step="1" min="0" class="mt-1 block w-full" :value="old('reorder_level', $product->reorder_level ?? 5)" required />
+            <p class="mt-1 text-xs text-fg-subtle">Flagged as low stock at or below this quantity.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('reorder_level')" />
+        </div>
+    </div>
+
     <div>
         <x-input-label for="image" :value="$product ? 'Replace Image (optional)' : 'Product Image'" />
         <input id="image" name="image" type="file" accept="image/*" {{ $product ? '' : 'required' }}

@@ -10,6 +10,7 @@ use App\Http\Controllers\Settings\RoleController;
 use App\Http\Controllers\Settings\UserController;
 use App\Http\Controllers\Inventory\CategoryController;
 use App\Http\Controllers\Inventory\ProductController;
+use App\Http\Controllers\Inventory\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,11 @@ Route::middleware(['auth'])->prefix('inventory')->name('inventory.')->group(func
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
+
+    Route::middleware('page.access:inventory.stock')->group(function () {
+        Route::get('/stock', [StockController::class, 'index'])->name('stock');
+        Route::post('/stock/{product}/adjust', [StockController::class, 'adjust'])->name('stock.adjust');
+    });
 });
 
 /*
@@ -103,8 +109,6 @@ Route::middleware(['auth'])->prefix('inventory')->name('inventory.')->group(func
 
 Route::middleware(['auth'])->group(function () {
     Route::view('/pos', 'coming-soon', ['title' => 'POS Terminal'])->name('pos.terminal');
-
-    Route::view('/inventory/stock', 'coming-soon', ['title' => 'Product Stock'])->name('inventory.stock');
 
     Route::view('/customers/create', 'coming-soon', ['title' => 'Customer Creation'])->name('customer.create');
     Route::view('/customers', 'coming-soon', ['title' => 'Customer List'])->name('customer.list');

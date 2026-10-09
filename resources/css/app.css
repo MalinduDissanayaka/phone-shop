@@ -26,6 +26,7 @@
         --c-accent: 79 70 229;          /* indigo-600 */
         --c-link: 37 99 235;            /* blue-600 */
         --c-success: 21 128 61;         /* green-700 */
+        --c-warning: 180 83 9;          /* amber-700 */
         --c-danger: 220 38 38;          /* red-600 */
     }
 
@@ -46,6 +47,7 @@
 
         --c-link: 96 165 250;           /* blue-400 */
         --c-success: 74 222 128;        /* green-400 */
+        --c-warning: 251 191 36;        /* amber-400 */
         --c-danger: 248 113 113;        /* red-400 */
     }
 

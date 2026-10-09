@@ -98,8 +98,8 @@
                                     <span class="text-2xl font-bold text-link">
                                         Rs {{ number_format($phone->price) }}
                                     </span>
-                                    <span class="text-xs text-success font-medium">
-                                        In Stock
+                                    <span class="text-xs font-medium {{ $phone->stock_quantity > 0 ? 'text-success' : 'text-danger' }}">
+                                        {{ $phone->stock_quantity > 0 ? 'In Stock' : 'Out of Stock' }}
                                     </span>
                                 </div>
 
